@@ -36,9 +36,7 @@ class ParkingLot:
     def show_status(self):
         with self.lock:
             print("\n📊 Estado del Estacionamiento:")
-            print(f"Capacidad total: {self.capacity}")
-            print(f"Espacios ocupados: {len(self.occupied)}")
-            print(f"Espacios disponibles: {len(self.available)}")
+            print(f"🚗 Capacidad total: {self.capacity} | 🚫 Ocupados: {len(self.occupied)} | 🟩 Disponibles: {len(self.available)}")
             if self.occupied:
                 print("Vehículos estacionados:")
                 for plate, space in self.occupied.items():
@@ -56,7 +54,7 @@ class ParkingLot:
                 print("[🚗]", end=" ") 
             if i % 10 == 0:
                 print()
-        print("\n")
+        print("\n ---------------------------------------------------------------------------")
 
     def automatic_simulation(self):
         while True:
@@ -64,10 +62,12 @@ class ParkingLot:
             if random.choice([True, False]):
                 plate = f"ABC-{random.randint(100, 999)}"
                 self.register_entry(plate)
+                self.show_status()
             else:
                 if self.occupied:
                     plate = random.choice(list(self.occupied.keys()))
                     self.register_exit(plate)
+                    self.show_status()
 
 def menu():
     parking_lot = ParkingLot(3)
